@@ -3,7 +3,7 @@ USE Mastercamp;
 -- drop table User;
 CREATE TABLE User ( 
 	ID int auto_increment primary key,
-    User_created datetime,
+    -- User_created datetime,
 	User_prenom varchar(20) not null,
     User_nom varchar(20) not null,
 	User_mail varchar(50) not null,
