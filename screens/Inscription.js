@@ -1,95 +1,68 @@
-import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    TouchableOpacity,
-  } from "react-native";
-  import { useState } from "react";
-  import * as SQLite from "expo-sqlite";
-  import { useNavigation } from "@react-navigation/native";
-  
-  export default function Inscription() {
-    const navigation = useNavigation();
-    const [ID, setID] = useState("");
-    const [Userprenom, setUserprenom] = useState("");
-    const [Usernom, setUsernom] = useState("");
-    const [Usermail, setUsermail] = useState("");
-    const [Userpassword, setUserpassword] = useState("");
-  
-    const handleRetourConnexion = () => {
-      navigation.navigate("Connexion");
-    };
-    const AddUser = () => {
-      const db = SQLite.openDatabase("ma_base_de_donnees.db");
-  
-      db.transaction((tx) => {
-        tx.executeSql(
-          "INSERT INTO User (ID, User_prenom, User_nom, User_mail, User_role, User_passwords) VALUES (?, ?, ?, ?, ?, ?)",
-          [
-            `${ID}`,
-            `${Userprenom}`,
-            `${Usernom}`,
-            `${Usermail}`,
-            "user",
-            `${Userpassword}`,
-          ],
-          (_, resultSet) => {
-            console.log("Insertion réussie !");
-          },
-          (_, error) => {
-            console.log("Erreur lors de l'insertion User:", error);
-          }
-        );
-      });
-  
-      navigation.navigate("Connexion");
-    };
-  
-    return (
-      <View style={styles.background}>
-        <Text style={styles.titre}> Inscription </Text>
-        <View style={styles.container}>
-          <TextInput
-            style={styles.textezone}
-            keyboardType="numeric"
-            placeholder="Numéro de licence"
-            value={numLicence}
-            onChangeText={setnumLicence}
-          />
-          <TextInput
-            style={styles.textezone}
-            placeholder="Prénom"
-            value={Userprenom}
-            onChangeText={setUserprenom}
-          />
-          <TextInput
-            style={styles.textezone}
-            placeholder="Nom"
-            value={Usernom}
-            onChangeText={setUsernom}
-          />
-          <TextInput
-            style={styles.textezone}
-            placeholder="Email"
-            value={Usermail}
-            onChangeText={setUsermail}
-          />
-          <TextInput
-            style={styles.textezone}
-            placeholder="Mot de passe"
-            value={Userpassword}
-            onChangeText={setUserpassword}
-          />
-          <TouchableOpacity style={styles.button} onPress={AddUser}>
-            <Text style={{ color: "white" }}> S'inscrire </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleRetourConnexion}>
-            <Text style={{ color: "white" }}>
-              Retourner à la page de Connexion
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
+import React, { useState } from "react";
+
+const Inscription = () => {
+  const [numLicence, setNumLicence] = useState("");
+  const [Userprenom, setUserprenom] = useState("");
+  const [Usernom, setUsernom] = useState("");
+  const [Usermail, setUsermail] = useState("");
+  const [Userpassword, setUserpassword] = useState("");
+
+  const handleRetourConnexion = () => {
+    // Ajoutez ici la logique de redirection vers la page de connexion
+  };
+
+  const AddUser = () => {
+    // Ajoutez ici la logique d'ajout de l'utilisateur dans votre base de données
+  };
+
+  return (
+    <div className="background">
+      <h1 className="titre">Inscription</h1>
+      <div className="container">
+        <input
+          type="text"
+          className="textezone"
+          placeholder="Numéro de licence"
+          value={numLicence}
+          onChange={(e) => setNumLicence(e.target.value)}
+        />
+        <input
+          type="text"
+          className="textezone"
+          placeholder="Prénom"
+          value={Userprenom}
+          onChange={(e) => setUserprenom(e.target.value)}
+        />
+        <input
+          type="text"
+          className="textezone"
+          placeholder="Nom"
+          value={Usernom}
+          onChange={(e) => setUsernom(e.target.value)}
+        />
+        <input
+          type="text"
+          className="textezone"
+          placeholder="Email"
+          value={Usermail}
+          onChange={(e) => setUsermail(e.target.value)}
+        />
+        <input
+          type="password"
+          className="textezone"
+          placeholder="Mot de passe"
+          value={Userpassword}
+          onChange={(e) => setUserpassword(e.target.value)}
+        />
+        <button className="button" onClick={AddUser}>
+          S'inscrire
+        </button>
+        <button onClick={handleRetourConnexion}>
+          Retourner à la page de Connexion
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Inscription;
