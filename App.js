@@ -1,17 +1,15 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import React, { useState, useEffect, useDebugValue } from "react";
-import { AppRegistry, TextInputBase, alert } from "react-native";
+import React, { useEffect } from "react";
 import * as SQLite from "expo-sqlite";
 import NavigationDrawer from "./Components/NavigationDrawer";
 
 const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
-export default function App() {
+const App = () => {
   useEffect(() => {
-    // createTables();
-    // insertData();
+    createTables();
+    insertData();
     fetchData();
-    // DelData();
+    DelData();
   }, []);
 
   const createTables = () => {
@@ -28,20 +26,15 @@ export default function App() {
         }
       );
 
-      const db = SQLite.openDatabase("ma_base_de_donnees.db");
-
       // Création de la table LocalData
-      tx.executeSql(
+      txn.executeSql(
         "CREATE TABLE IF NOT EXISTS LocalData (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT UNIQUE, value TEXT)",
         [],
         () => {
-          console.log("Table LocalData créée avec succès");
+          console.log("Table LocalData created successfully");
         },
         (_, error) => {
-          console.error(
-            "Erreur lors de la création de la table LocalData",
-            error
-          );
+          console.error("Error creating LocalData table", error);
         }
       );
     });
@@ -56,7 +49,7 @@ export default function App() {
           console.log("Insertion réussie !");
         },
         (_, error) => {
-          console.log("Erreur lors de l'insertion User:", error);
+          console.log("Erreur lors de l'insertion User :", error);
         }
       );
     });
@@ -95,7 +88,7 @@ export default function App() {
       );
     });
   };
-  return <NavigationDrawer />;
-}
 
-AppRegistry.registerComponent("App", () => App);
+  return <NavigationDrawer />;
+};
+
