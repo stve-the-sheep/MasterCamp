@@ -1,44 +1,20 @@
 import React, { useState } from "react";
 
-const Inscription = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+const Connexion = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajoutez ici la logique de traitement de l'inscription
-    console.log("Nom:", firstName);
-    console.log("Prénom:", lastName);
+    // Ajoutez ici la logique de traitement de la connexion
     console.log("Adresse e-mail:", email);
     console.log("Mot de passe:", password);
   };
 
   return (
     <div>
-      <h2>Inscription</h2>
+      <h2>Connexion</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstName">Nom :</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Prénom :</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </div>
         <div>
           <label htmlFor="email">Adresse e-mail :</label>
           <input
@@ -59,10 +35,10 @@ const Inscription = () => {
             required
           />
         </div>
-        <button type="submit">S'inscrire</button>
+        <button type="submit">Se connecter</button>
       </form>
     </div>
   );
 };
 
-export default Inscription;
+export default Connexion;
