@@ -1,9 +1,10 @@
-import React, {useContext} from 'react'
-import {UserContext} from "../context/userContext"
-import {Link} from "react-router-dom"
-import {signOut} from "firebase/auth"
-import { useNavigate } from 'react-router-dom'
-import {auth} from "../firebase-config"
+import React, { useContext } from 'react';
+import { UserContext } from "../context/userContext";
+import { Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import { auth } from "../firebase-config";
+import './Navbar.css';
 
 export default function Navbar() {
   const { toggleModals } = useContext(UserContext);
@@ -21,33 +22,29 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-light bg-light px-4">
+    <nav className="navbar">
       <Link to="/" className="navbar-brand">
         MSC-218
       </Link>
-
-      <div>
-        <button onClick={() => toggleModals("signUp")} className="btn btn-primary">
-          Sign Up
-        </button>
-        <button onClick={() => toggleModals("signIn")} className="btn btn-primary ms-2">
-          Sign In
-        </button>
-        <button onClick={logOut} className="btn btn-danger ms-2">
-          Log Out
-        </button>
-      </div>
-
       <div className="navbar-container">
         <div className="navbar-left">
-          <Link to="/">Accueil</Link>
-          <Link to="/football">Football</Link>
-          <Link to="/tennis">Tennis</Link>
-          <Link to="/about">À propos</Link>
+          <Link to="/" className="nav-link">Accueil</Link>
+          <Link to="/football" className="nav-link">Football</Link>
+          <Link to="/tennis" className="nav-link">Tennis</Link>
+          <Link to="/about" className="nav-link">À propos</Link>
         </div>
         <div className="navbar-right">
-          <Link to="/login">Connexion</Link>
-          <Link to="/signup">Inscription</Link>
+          <div>
+            <button onClick={() => toggleModals("signUp")} className="btn btn-primary">
+              Sign Up
+            </button>
+            <button onClick={() => toggleModals("signIn")} className="btn btn-primary ms-2">
+              Sign In
+            </button>
+            <button onClick={logOut} className="btn btn-danger ms-2">
+              Log Out
+            </button>
+          </div>
         </div>
       </div>
     </nav>
