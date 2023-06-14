@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {Routes, Route} from "react-router-dom"
 import Navbar from "./components/Navbar";
 import Home from "./screens/Home";
 import Football from "./screens/Football";
@@ -8,11 +8,14 @@ import Connexion from "./screens/Connexion";
 import Inscription from "./screens/Inscription";
 import About from "./screens/About";
 import "./App.css";
+import SignUpModal from "./components/SignUpModal";
+import SignInModal from "./components/SignInModal"
 
 function App() {
   return (
-    <Router>
       <div>
+      <SignUpModal />
+      <SignInModal />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -23,7 +26,6 @@ function App() {
           <Route path="/signup" element={<Inscription />} />
         </Routes>
       </div>
-    </Router>
   );
 }
 
