@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import {signOut} from "firebase/auth"
 import { useNavigate } from 'react-router-dom'
 import {auth} from "../firebase-config"
+
 export default function Navbar() {
   const { toggleModals } = useContext(UserContext);
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-light bg-light px-4">
       <Link to="/" className="navbar-brand">
-        AuthJS
+        MSC-218
       </Link>
 
       <div>
