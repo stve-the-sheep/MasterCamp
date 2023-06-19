@@ -1,0 +1,78 @@
+#intro0 {
+    background-image: url(./assets/foot.jpeg);
+    background-position: bottom;
+    background-size: cover;
+    height: 300px;
+    padding: 3%;
+    width: 100%;
+    text-align: center;
+  }
+  #intro0 p {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: black 0.1em 0.1em 0.2em;
+  }
+  #matchfoot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  
+  .match1,
+  .match2,
+  .match3,
+  .match4,
+  .match5 {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .match1:hover,
+  .match2:hover,
+  .match3:hover,
+  .match4:hover,
+  .match5:hover {
+    transform: scale(1.1);
+  }
+  
+  .match-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+
+  .match1 {
+    background-image: url("./assets/match1.jpg");
+  }
+  
+  .match2 {
+    background-image: url("./assets/match2.png");
+  }
+  
+  .match3 {
+    background-image: url("./assets/match3.webp");
+  }
+  
+  .match4 {
+    background-image: url("./assets/match4.png");
+  }
+  
+  .match5 {
+    background-image: url("./assets/match5.jpg");
+  }
+  
+  
+  
+  
+  
+  
+  

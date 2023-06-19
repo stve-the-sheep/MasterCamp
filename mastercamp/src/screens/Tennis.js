@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import './Tennis.css';
 
 const Tennis = () => {
+  const [selectedMatch, setSelectedMatch] = useState("");
+  const [generatedText, setGeneratedText] = useState("");
+
+  const handleMatchSelection = (event) => {
+    setSelectedMatch(event.target.value);
+  };
+
+  const handleGenerateText = () => {
+    // Generate text based on selectedMatch
+    setGeneratedText(`Generated text for ${selectedMatch}`);
+  };
+
   return (
     <div>
-      <h2>Sports</h2>
-      <p>Cette page présente des informations sur les sports.</p>
+      <div id="intro">
+        <h1>Tennis</h1>
+        <p>It's time to look for a tennis match</p>
+        <p>Generate a match resume</p>
+      </div>
+      <div id="search-bar">
+        <input type="text" placeholder="Search for a tennis match" value={selectedMatch} onChange={handleMatchSelection} />
+        <button onClick={handleGenerateText}>Generate Text</button>
+      </div>
+      <div id="generated-text">
+        {generatedText && <p>{generatedText}</p>}
+      </div>
     </div>
   );
 };
