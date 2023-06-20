@@ -25,8 +25,8 @@ const Football = () => {
         <p>Generate a match resume</p>
       </div>
       <div id="search-bar">
-        <input type="text" placeholder="Country 1" value={country1} onChange={handleCountry1Change} />
-        <input type="text" placeholder="Country 2" value={country2} onChange={handleCountry2Change} />
+        <input type="text" placeholder="Club 1" value={country1} onChange={handleCountry1Change} />
+        <input type="text" placeholder="Club 2" value={country2} onChange={handleCountry2Change} />
         <button onClick={handleGenerateText}>Generate Text</button>
       </div>
       <div id="generated-text">
