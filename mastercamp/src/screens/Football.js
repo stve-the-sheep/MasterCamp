@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import './Football.css';
+import React, { useState, useEffect } from "react";
+import "./Football.css";
+import axios from "axios";
+
 const Football = () => {
   const [country1, setCountry1] = useState("");
   const [country2, setCountry2] = useState("");
@@ -17,6 +19,21 @@ const Football = () => {
     setGeneratedText(`Generated text for ${country1} vs ${country2}`);
   };
 
+  useEffect(() => {
+    const fetchMatches = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.api-tennis.com/tennis/?method=get_fixtures&APIkey=b5e3131ee1401ec54fe79909dfbe13db10496ae7f2393655a76e0a475ad04bbc&date_start=2023-06-04&date_stop=2023-06-15&tournament_key=2155"
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMatches();
+  }, []);
+
   return (
     <div>
       <div id="intro0">
@@ -25,13 +42,9 @@ const Football = () => {
         <p>Generate a match resume</p>
       </div>
       <div id="search-bar">
-        <input type="text" placeholder="Club 1" value={country1} onChange={handleCountry1Change} />
-        <input type="text" placeholder="Club 2" value={country2} onChange={handleCountry2Change} />
         <button onClick={handleGenerateText}>Generate Text</button>
       </div>
-      <div id="generated-text">
-        {generatedText && <p>{generatedText}</p>}
-      </div>
+      <div id="generated-text">{generatedText && <p>{generatedText}</p>}</div>
     </div>
   );
 };
