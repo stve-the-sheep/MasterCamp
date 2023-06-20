@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./Tennis.css";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import TennisCard from '../components/TennisCard';
+import axios from 'axios';
 
-const Tennis = () => {
+const MatchScreen = () => {
   const [matches, setMatches] = useState([]);
 
   useEffect(() => {
@@ -20,44 +20,15 @@ const Tennis = () => {
     fetchMatches();
   }, []);
 
+
   return (
-    <div id="tennis-page">
-      <h1>Tennis Matches</h1>
+    <div>
+      <h1>Matchs de tennis</h1>
       {matches.map((match) => (
-        <div key={match.event_key} className="tennis-card">
-          <div className="player-info">
-            <div className="player">
-              <img
-                src={match.event_first_player_logo}
-                alt={match.event_first_player}
-              />
-              <span>{match.event_first_player}</span>
-            </div>
-            <div className="player">
-              <img
-                src={match.event_second_player_logo}
-                alt={match.event_second_player}
-              />
-              <span>{match.event_second_player}</span>
-            </div>
-          </div>
-          <div className="match-info">
-            <div className="score">{match.event_final_result}</div>
-            <div className="winner">{match.event_winner}</div>
-            <div className="sets">
-              {match.scores.map((set, index) => (
-                <div key={index} className="set">
-                  {set.score_first}-{set.score_second}
-                </div>
-              ))}
-            </div>
-            <div className="date">{match.event_date}</div>
-            <div className="tournament">{match.tournament_name}</div>
-          </div>
-        </div>
+        <TennisCard key={match.event_key} match={match} />
       ))}
     </div>
   );
 };
 
-export default Tennis;
+export default MatchScreen;
