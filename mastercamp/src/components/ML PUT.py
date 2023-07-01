@@ -2,6 +2,19 @@ import spacy
 import pytextrank
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 from transformers import pipeline
+import json
+
+# with open('./TennisCard.js') as f:
+#     params = json.load(f)
+
+# event_first_player = params['event_first_player']
+# event_second_player = params['event_second_player']
+# event_final_result = params['event_final_result']
+# event_winner = params['event_winner']
+# scores = params['scores']
+# event_date = params['event_date']
+# tournament_name = params['tournament_name']
+
 
 nlp = spacy.load("en_core_web_lg")
 
@@ -40,13 +53,15 @@ pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
 pegasus_model = PegasusForConditionalGeneration.from_pretrained(model_name)
 
 # Création des jetons (tokens)
-tokens = pegasus_tokenizer(texte, truncation=True, padding='longest', return_tensors='pt')
+tokens = pegasus_tokenizer(texte, truncation=True,
+                           padding='longest', return_tensors='pt')
 
 # Résumé du texte assez court
 encoded_summary = pegasus_model.generate(**tokens)
 
 # Décodage du résumé du texte
-decoded_summary = pegasus_tokenizer.decode(encoded_summary[0], skip_special_tokens=True)
+decoded_summary = pegasus_tokenizer.decode(
+    encoded_summary[0], skip_special_tokens=True)
 
 print("\n Petit résumé :\n")
 print(decoded_summary)
@@ -54,7 +69,8 @@ print(decoded_summary)
 # Création d'un nouveau résumé plus long
 
 # Définir la pipeline pour le résumé
-summarizer = pipeline("summarization", model=model_name, tokenizer=pegasus_tokenizer, framework="pt")
+summarizer = pipeline("summarization", model=model_name,
+                      tokenizer=pegasus_tokenizer, framework="pt")
 
 # Création du résumé
 summary = summarizer(texte, min_length=40, max_length=150)
