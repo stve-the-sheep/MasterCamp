@@ -1,5 +1,105 @@
 /* Styles for the HomePage component */
 
+#introAccueil {
+  background-image: url(./assets/stade.jpg);
+  background-position: bottom;
+  background-size: cover;
+  height: 300px;
+  padding: 3%;
+  width: 100%;
+  text-align: center;
+}
+#introAccueil p {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+#introAccueil h1 {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.page-link {
+  display: block;
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.page-link:hover {
+  transform: scale(1.1);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+
+/*
+#page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.page1,
+.page2{
+  width: 300px;
+  height: 200px;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.page1:hover,
+.page2:hover{
+  transform: scale(1.1);
+}
+
+.page-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.pagefoot {
+  background-image: url("./assets/footAcc.jpeg");
+}
+
+.pagetennis {
+  background-image: url("./assets/tennisAcc.jpg");
+}
+
+
+/*
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -16,10 +116,12 @@
     font-size: 16px;
     color: #666;
   }
+*/
+  
   
   /* Custom styles for specific elements */
   
-  h2:first-of-type {
+  /*h2:first-of-type {
     color: #ff0000;
     text-align: center;
   }
@@ -34,4 +136,4 @@
     text-align: center;
     margin-top: 20px;
   }
-  
+  */

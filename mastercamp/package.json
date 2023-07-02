@@ -11,6 +11,7 @@
     "deepai": "^1.0.21",
     "firebase": "^9.22.2",
     "node": "^20.2.0",
+    "nodemon": "^2.0.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
