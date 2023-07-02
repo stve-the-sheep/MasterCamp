@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./TennisCard.module.css";
 import TennisMatchSummary from "./TennisMatchSummary";
-import python from "node-python;";
+//import python from "node-python;";
 
 const TennisCard = ({ match }) => {
   const [showSummary, setShowSummary] = useState(false);
@@ -20,7 +20,7 @@ const TennisCard = ({ match }) => {
     event_date,
     tournament_name,
   } = match;
-  const result = python.run("./ML PUT.py", [
+  /*const result = python.run("./ML PUT.py", [
     event_first_player,
     event_second_player,
     event_final_result,
@@ -28,7 +28,7 @@ const TennisCard = ({ match }) => {
     scores,
     event_date,
     tournament_name,
-  ]);
+  ]);*/
 
   return (
     <div className={styles["tennis-card"]}>
