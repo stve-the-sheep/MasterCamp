@@ -15,12 +15,6 @@ import json
 # event_date = params['event_date']
 # tournament_name = params['tournament_name']
 
-
-import spacy
-import pytextrank
-from transformers import PegasusForConditionalGeneration, PegasusTokenizer
-from transformers import pipeline
-
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
 
