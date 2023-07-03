@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import TennisCard from '../components/TennisCard';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import TennisCard from "../components/TennisCard";
+import axios from "axios";
 
 const MatchScreen = () => {
   const [matches, setMatches] = useState([]);
@@ -19,7 +19,6 @@ const MatchScreen = () => {
 
     fetchMatches();
   }, []);
-
 
   return (
     <div>
