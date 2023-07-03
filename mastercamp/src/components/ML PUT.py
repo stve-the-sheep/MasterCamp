@@ -3,17 +3,17 @@ import pytextrank
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 from transformers import pipeline
 import json
+#import sys.argv
 
-# with open('./TennisCard.js') as f:
-#     params = json.load(f)
+#args = sys.argv
 
-# event_first_player = params['event_first_player']
-# event_second_player = params['event_second_player']
-# event_final_result = params['event_final_result']
-# event_winner = params['event_winner']
-# scores = params['scores']
-# event_date = params['event_date']
-# tournament_name = params['tournament_name']
+event_first_player = args['event_first_player']
+event_second_player = args['event_second_player']
+event_final_result = args['event_final_result']
+event_winner = args['event_winner']
+scores = args['scores']
+event_date = args['event_date']
+tournament_name = args['tournament_name']
 
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
@@ -21,14 +21,17 @@ nlp = spacy.load("en_core_web_lg")
 # Add TextRank algorithm to the pipeline
 nlp.add_pipe("textrank")
 
-texte = """The Serb was crowned for the third time in his career after 2016 and 2021, on the Parisian clay, on Sunday.
-The Serb didn't tremble for long. Despite a contested first set, won in the tie-break – a sector in which he excels – Novak Djokovic prevailed in three sets (7-6 [7-1], 6-3, 7-5) against the Norwegian Casper Ruud on Sunday, June 11th.
-He who will reclaim the number 1 spot in the world on Monday was crowned for the third time in his career at Roland-Garros, after a controlled match.
-The third member of the 'Big 3' was particularly up to the challenge of this historic event.
-Initially hindered by the power of a fearless Casper Ruud, the Belgradian made unusual mistakes (we notably think of those two completely missed smashes) before showcasing his experience.
-He gradually took control of the exchanges, opportunistically capitalizing on any weaknesses and gaining the upper hand – as he often does – by tightening his game in crucial moments.
-Thanks to this victory, he secured the 23rd Grand Slam title of his career and the record for the most Major titles won by a male player.
-He is now just one step away from Margaret Court and her 24 titles."""
+texte = """Lors de la compétition de tennis {tournament_name}, un affrontement palpitant a eu lieu entre deux joueurs talentueux, {event_first_player} et {event_second_player}. Ce match a été le théâtre d'un spectacle captivant, offrant des moments de tension, d'excitation et de brillantes démonstrations de jeu. Plongeons dans les temps forts de cette rencontre épique qui a tenu en haleine les fans de tennis.
+Les deux protagonistes, {event_first_player} et {event_second_player}, ont abordé ce match avec détermination et ambition. Ils étaient tous deux déterminés à prouver leur valeur sur le court de {tournament_name}, attirant ainsi l'attention des amateurs de tennis du monde entier.
+Le premier set a immédiatement captivé l'attention des spectateurs. Les échanges étaient intenses, avec des coups précis et des déplacements rapides. {event_first_player} et {event_second_player} se sont livrés à une bataille sans merci, essayant de prendre le dessus sur l'autre. Finalement, après une lutte acharnée, {scores} a été en faveur de {event_winner}.
+Le deuxième set a été tout aussi captivant. Les deux joueurs ont continué à s'affronter avec une grande intensité, cherchant à exploiter les faiblesses de leur adversaire. Les échanges étaient riches en stratégie, avec des variations de rythme et des coups puissants. Ce set s'est conclu avec un scores de {scores} en faveur de {event_winner}.
+Au fur et à mesure que le match progressait, la tension montait sur le court. Les spectateurs étaient suspendus à chaque coup, admirant le talent et la ténacité des deux joueurs. Chaque point était crucial, et la lutte pour la victoire était plus intense que jamais.
+Le troisième set a été le tournant décisif du match.""" 
+
+# /* Les deux joueurs se sont surpassés, affichant une détermination sans faille. Les échanges étaient spectaculaires, avec des coups gagnants et des défenses impressionnantes. Le scores était serré tout au long du set, créant une atmosphère électrique sur le court.
+# Finalement, après une bataille acharnée, {event_winner} a réussi à prendre l'avantage et à remporter le set avec un scores de {scores}. Cette victoire a propulsé {event_winner} vers la ligne d'arrivée, mais {event_second_player/event_first_player} ne s'est pas laissé abattre et a continué à se battre jusqu'au dernier point.
+# Ce match de tennis passionnant entre {event_first_player} et {event_second_player} à {tournament_name} a été un véritable spectacle sportif. Les deux joueurs ont montré leur talent, leur endurance et leur esprit combatif tout au long de la rencontre. Ce match restera dans les mémoires comme un exemple de la beauté du tennis et de la rivalité saine entre les athlètes.
+# Que vous soyez un passionné de tennis ou un amateur de sports en général, ce duel inoubliable entre {event_first_player} et {event_second_player} à {tournament_name} vous a offert des moments de pur plaisir et d'excitation. Il témoigne de l'attrait universel de ce sport, capable de nous transporter et de nous faire vibrer à chaque échange.*/
 
 # Execute the Spacy pipeline with the TextRank algorithm
 doc = nlp(texte)
