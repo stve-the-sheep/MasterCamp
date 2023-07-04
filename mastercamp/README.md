@@ -70,11 +70,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 ### Description du projet
+
 Notre projet est utile pour les amateurs de sports, il permet après s'être connecté d'obtenir les scores de différents match de tennis qui se sont déroulés à Roland-Garros.
 
-### 
+###
 
-
-
-
-
+Ouvrir 2 terminals
+Dans le premier:
+-node server.js
+Dans le deuxieme:
+-npm start
+Si manque des modules pour react :
+-npm install
+Créer un compte est optionnel

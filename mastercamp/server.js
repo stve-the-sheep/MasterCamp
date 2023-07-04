@@ -33,20 +33,22 @@ app.get("/run-python", (req, res) => {
 
     try {
       // Parser la sortie JSON
-      const result = JSON.parse(output);
+      console.log(output);
+      const result = output;
+      // const resultText = result.substring(result.indexOf(":") + 1).trim();
 
       // Renvoyer la sortie JSON en tant que réponse
       res.send(
         JSON.stringify({
-          result: result,
+          result: result.replace(/\r\n/g, ""), // Supprimer les caractères \r\n
         })
       );
-    } catch (error) {
-      console.error(error);
+    } catch (parseError) {
+      console.error(parseError);
       res
         .status(500)
         .send(
-          "Une erreur s'est produite lors de l'exécution du script Python."
+          "Une erreur s'est produite lors de l'analyse de la sortie JSON du script Python."
         );
     }
   });

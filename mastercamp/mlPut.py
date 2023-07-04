@@ -2,26 +2,28 @@ import spacy
 import pytextrank
 import sys
 import json
+from transformers import PegasusForConditionalGeneration, PegasusTokenizer
+from transformers import pipeline
 
 # Définir les valeurs par défaut
 event_first_player = "Ruud"
 event_second_player = "Djokovic"
-event_final_result = "6-3, 6-3, 6-3"
+event_final_result = "7.7-6.1, 6-3, 7-5"
 event_winner = "Djokovic"
 scores = "6-3, 6-3, 6-3"
 event_date = "2023-06-11"
 tournament_name = "ATP French Open"
 
 # Vérifier si des arguments sont passés
-if len(sys.argv) > 1:
-    # Récupérer les arguments de ligne de commande
-    event_first_player = sys.argv[1]
-    # event_second_player = sys.argv[2]
-    # event_final_result = sys.argv[3]
-    # event_winner = sys.argv[4]
-    # scores = sys.argv[5]
-    # event_date = sys.argv[6]
-    # tournament_name = sys.argv[7]
+# if len(sys.argv) > 1:
+#     # Récupérer les arguments de ligne de commande
+# event_first_player = sys.argv[1]
+# event_second_player = sys.argv[2]
+# event_final_result = sys.argv[3]
+# event_winner = sys.argv[4]
+# scores = sys.argv[5]
+# event_date = sys.argv[6]
+# tournament_name = sys.argv[7]
 
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
@@ -29,14 +31,16 @@ nlp = spacy.load("en_core_web_lg")
 # Add TextRank algorithm to the pipeline
 nlp.add_pipe("textrank")
 
-texte = "During the " + tournament_name + " tennis competition, an exciting showdown took place between two talented players, " + event_first_player + " and " + event_second_player + ". This match was a spectacle of captivating moments, filled with tension, excitement, and brilliant displays of skill. Let's dive into the highlights of this epic encounter that kept tennis fans on the edge of their seats.\n\nBoth protagonists, " + event_first_player + " and " + event_second_player + ", approached this match with determination and ambition. They were both eager to prove their worth on the " + tournament_name + " court, garnering the attention of tennis enthusiasts worldwide.\n\nThe first set immediately captured the spectators' attention. The rallies were intense, with precise shots and swift movements. " + event_first_player + " and " + event_second_player + " engaged in a relentless battle, each trying to gain the upper hand. Ultimately, after a fierce struggle, the score favored " + event_winner + ".\n\nThe second set was equally captivating. The two players continued to clash with high intensity, seeking to exploit each other's weaknesses. The rallies were filled with strategic plays, featuring variations in pace and powerful shots. This set concluded with a score of " + scores + " in favor of " + event_winner + \
-    ".\n\nAs the match progressed, the tension escalated on the court. Spectators hung on every shot, admiring the talent and tenacity displayed by both players. Every point was crucial, and the fight for victory was more intense than ever.\n\nThe third set proved to be the decisive turning point of the match. Both players pushed themselves to their limits, showcasing unwavering determination. The rallies were spectacular, featuring winning shots and impressive defenses. The score remained tight throughout the set, creating an electric atmosphere on the court.\n\nUltimately, after a grueling battle, " + event_winner + " managed to gain the advantage and claim the set with a score of " + scores + ". This victory propelled " + event_winner + " closer to the finish line, but " + event_second_player + \
-    "/" + event_first_player + " refused to be defeated and continued to fight until the last point.\n\nThis thrilling tennis match between " + event_first_player + " and " + event_second_player + " at " + tournament_name + " was a true sporting spectacle. Both players showcased their talent, endurance, and fighting spirit throughout the encounter. This match will be remembered as an example of the beauty of tennis and the healthy rivalry between athletes.\n\nWhether you're a tennis enthusiast or a sports fan in general, this unforgettable duel between " + \
-    event_first_player + " and " + event_second_player + " at " + tournament_name + \
-    " provided moments of pure joy and excitement. It demonstrates the universal appeal of this sport, capable of transporting us and making us thrill with each exchange."
-
+texte2 = """The Serb was crowned for the third time in his career after 2016 and 2021, on the Parisian clay, on Sunday.
+The Serb didn't tremble for long. Despite a contested first set, won in the tie-break – a sector in which he excels – Novak Djokovic prevailed in three sets (7-6 [7-1], 6-3, 7-5) against the Norwegian Casper Ruud on Sunday, June 11th.
+He who will reclaim the number 1 spot in the world on Monday was crowned for the third time in his career at Roland-Garros, after a controlled match.
+The third member of the 'Big 3' was particularly up to the challenge of this historic event.
+Initially hindered by the power of a fearless Casper Ruud, the Belgradian made unusual mistakes (we notably think of those two completely missed smashes) before showcasing his experience.
+He gradually took control of the exchanges, opportunistically capitalizing on any weaknesses and gaining the upper hand – as he often does – by tightening his game in crucial moments.
+Thanks to this victory, he secured the 23rd Grand Slam title of his career and the record for the most Major titles won by a male player.
+He is now just one step away from Margaret Court and her 24 titles."""""
 # Execute the Spacy pipeline with the TextRank algorithm
-doc = nlp(texte)
+doc = nlp(texte2)
 
 # Create a list to store the summary sentences
 summary_sentences = []
@@ -62,4 +66,40 @@ summary_data = {
 summary_json = json.dumps(summary_data)
 
 # Print the summary data
-print(summary_json)
+# print(summary_json)
+
+# Pick the Pegasus model
+model_name = "google/pegasus-xsum"
+# Load the pretrained tokenizer
+pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
+# Define the Pegasus model
+pegasus_model = PegasusForConditionalGeneration.from_pretrained(model_name)
+# Create tokens for the Pegasus model
+tokens = pegasus_tokenizer(texte2, truncation=True,
+                           padding="longest", return_tensors="pt")
+# Generate the summary using Pegasus
+# Use max_new_tokens instead of max_length
+encoded_summary = pegasus_model.generate(**tokens, max_new_tokens=700)
+# Decode the summarized text
+decoded_summary = pegasus_tokenizer.decode(
+    encoded_summary[0],
+    skip_special_tokens=True
+)
+print("\n Petit resume :          \n")
+print(decoded_summary)
+
+# Define the pipeline for the summary
+summarizer = pipeline(
+    "summarization",
+    model=model_name,
+    tokenizer=pegasus_tokenizer,
+    framework="pt"
+)
+
+# Create a longer summary using the pipeline
+summary = summarizer(texte2, min_length=50, max_length=150,
+                     do_sample=True, temperature=1.5)
+
+print("\n Grand resume :          \n")
+print("                   ")
+print(summary[0]["summary_text"])
