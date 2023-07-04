@@ -27,20 +27,26 @@ const TennisCard = ({ match }) => {
         "C:/Users/Jiah/Documents/GitHub/MasterCamp/mastercamp/mlPut.py", // Set the script path according to your project structure
       args: [
         event_first_player,
-        event_second_player,
-        event_final_result,
-        event_winner,
-        JSON.stringify(scores), // Convert the scores array to a JSON string
-        event_date,
-        tournament_name,
+        // event_second_player,
+        // event_final_result,
+        // event_winner,
+        // JSON.stringify(scores), // Convert the scores array to a JSON string
+        // event_date,
+        // tournament_name,
       ],
     };
-    const queryParams = new URLSearchParams(params).toString();
+    console.log(event_first_player);
+    const queryParams = Object.keys(params)
+      .map((key) => {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+      })
+      .join("&");
+    console.log(JSON.stringify(queryParams));
     fetch(`http://localhost:3000/run-python?${queryParams}`)
       .then((response) => response.text())
       .then((data) => {
         setResult(data);
-        console.log(JSON.stringify(scores));
+        console.log(data);
       })
       .catch((error) => {
         console.error(error);
@@ -81,7 +87,7 @@ const TennisCard = ({ match }) => {
         <div className={styles["tournament"]}>{tournament_name}</div>
         <button onClick={toggleSummary}>Voir le résumé</button>
         <button onClick={runPythonScript}>Voir le ml</button>
-
+        <div>{result}</div>
         {showSummary && <TennisMatchSummary match={match} />}
       </div>
     </div>

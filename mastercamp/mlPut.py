@@ -1,18 +1,27 @@
 import spacy
 import pytextrank
-from transformers import PegasusForConditionalGeneration, PegasusTokenizer
-from transformers import pipeline
 import sys
-args = sys.argv
+import json
 
-# print(1)
-# event_first_player = args[0]
-# event_second_player = args[1]
-# event_final_result = args[2]
-# event_winner = args[3]
-# scores = args[4]
-# event_date = args[5]
-# tournament_name = args[6]
+# Définir les valeurs par défaut
+event_first_player = "Ruud"
+event_second_player = "Djokovic"
+event_final_result = "6-3, 6-3, 6-3"
+event_winner = "Djokovic"
+scores = "6-3, 6-3, 6-3"
+event_date = "2023-06-11"
+tournament_name = "ATP French Open"
+
+# Vérifier si des arguments sont passés
+if len(sys.argv) > 1:
+    # Récupérer les arguments de ligne de commande
+    event_first_player = sys.argv[1]
+    # event_second_player = sys.argv[2]
+    # event_final_result = sys.argv[3]
+    # event_winner = sys.argv[4]
+    # scores = sys.argv[5]
+    # event_date = sys.argv[6]
+    # tournament_name = sys.argv[7]
 
 # Load the large English language model
 nlp = spacy.load("en_core_web_lg")
@@ -20,61 +29,37 @@ nlp = spacy.load("en_core_web_lg")
 # Add TextRank algorithm to the pipeline
 nlp.add_pipe("textrank")
 
-texte = """Lors de la compétition de tennis {tournament_name}, un affrontement palpitant a eu lieu entre deux joueurs talentueux, {event_first_player} et {event_second_player}. Ce match a été le théâtre d'un spectacle captivant, offrant des moments de tension, d'excitation et de brillantes démonstrations de jeu. Plongeons dans les temps forts de cette rencontre épique qui a tenu en haleine les fans de tennis.
-Les deux protagonistes, {event_first_player} et {event_second_player}, ont abordé ce match avec détermination et ambition. Ils étaient tous deux déterminés à prouver leur valeur sur le court de {tournament_name}, attirant ainsi l'attention des amateurs de tennis du monde entier.
-Le premier set a immédiatement captivé l'attention des spectateurs. Les échanges étaient intenses, avec des coups précis et des déplacements rapides. {event_first_player} et {event_second_player} se sont livrés à une bataille sans merci, essayant de prendre le dessus sur l'autre. Finalement, après une lutte acharnée, {scores} a été en faveur de {event_winner}.
-Le deuxième set a été tout aussi captivant. Les deux joueurs ont continué à s'affronter avec une grande intensité, cherchant à exploiter les faiblesses de leur adversaire. Les échanges étaient riches en stratégie, avec des variations de rythme et des coups puissants. Ce set s'est conclu avec un scores de {scores} en faveur de {event_winner}.
-Au fur et à mesure que le match progressait, la tension montait sur le court. Les spectateurs étaient suspendus à chaque coup, admirant le talent et la ténacité des deux joueurs. Chaque point était crucial, et la lutte pour la victoire était plus intense que jamais.
-Le troisième set a été le tournant décisif du match."""
-
-# /* Les deux joueurs se sont surpassés, affichant une détermination sans faille. Les échanges étaient spectaculaires, avec des coups gagnants et des défenses impressionnantes. Le scores était serré tout au long du set, créant une atmosphère électrique sur le court.
-# Finalement, après une bataille acharnée, {event_winner} a réussi à prendre l'avantage et à remporter le set avec un scores de {scores}. Cette victoire a propulsé {event_winner} vers la ligne d'arrivée, mais {event_second_player/event_first_player} ne s'est pas laissé abattre et a continué à se battre jusqu'au dernier point.
-# Ce match de tennis passionnant entre {event_first_player} et {event_second_player} à {tournament_name} a été un véritable spectacle sportif. Les deux joueurs ont montré leur talent, leur endurance et leur esprit combatif tout au long de la rencontre. Ce match restera dans les mémoires comme un exemple de la beauté du tennis et de la rivalité saine entre les athlètes.
-# Que vous soyez un passionné de tennis ou un amateur de sports en général, ce duel inoubliable entre {event_first_player} et {event_second_player} à {tournament_name} vous a offert des moments de pur plaisir et d'excitation. Il témoigne de l'attrait universel de ce sport, capable de nous transporter et de nous faire vibrer à chaque échange.*/
+texte = "During the " + tournament_name + " tennis competition, an exciting showdown took place between two talented players, " + event_first_player + " and " + event_second_player + ". This match was a spectacle of captivating moments, filled with tension, excitement, and brilliant displays of skill. Let's dive into the highlights of this epic encounter that kept tennis fans on the edge of their seats.\n\nBoth protagonists, " + event_first_player + " and " + event_second_player + ", approached this match with determination and ambition. They were both eager to prove their worth on the " + tournament_name + " court, garnering the attention of tennis enthusiasts worldwide.\n\nThe first set immediately captured the spectators' attention. The rallies were intense, with precise shots and swift movements. " + event_first_player + " and " + event_second_player + " engaged in a relentless battle, each trying to gain the upper hand. Ultimately, after a fierce struggle, the score favored " + event_winner + ".\n\nThe second set was equally captivating. The two players continued to clash with high intensity, seeking to exploit each other's weaknesses. The rallies were filled with strategic plays, featuring variations in pace and powerful shots. This set concluded with a score of " + scores + " in favor of " + event_winner + \
+    ".\n\nAs the match progressed, the tension escalated on the court. Spectators hung on every shot, admiring the talent and tenacity displayed by both players. Every point was crucial, and the fight for victory was more intense than ever.\n\nThe third set proved to be the decisive turning point of the match. Both players pushed themselves to their limits, showcasing unwavering determination. The rallies were spectacular, featuring winning shots and impressive defenses. The score remained tight throughout the set, creating an electric atmosphere on the court.\n\nUltimately, after a grueling battle, " + event_winner + " managed to gain the advantage and claim the set with a score of " + scores + ". This victory propelled " + event_winner + " closer to the finish line, but " + event_second_player + \
+    "/" + event_first_player + " refused to be defeated and continued to fight until the last point.\n\nThis thrilling tennis match between " + event_first_player + " and " + event_second_player + " at " + tournament_name + " was a true sporting spectacle. Both players showcased their talent, endurance, and fighting spirit throughout the encounter. This match will be remembered as an example of the beauty of tennis and the healthy rivalry between athletes.\n\nWhether you're a tennis enthusiast or a sports fan in general, this unforgettable duel between " + \
+    event_first_player + " and " + event_second_player + " at " + tournament_name + \
+    " provided moments of pure joy and excitement. It demonstrates the universal appeal of this sport, capable of transporting us and making us thrill with each exchange."
 
 # Execute the Spacy pipeline with the TextRank algorithm
 doc = nlp(texte)
 
-# Print the summary generated by TextRank
-# for sent in doc._.textrank.summary(limit_phrases=50, limit_sentences=50):
-#     print(sent)
+# Create a list to store the summary sentences
+summary_sentences = []
 
-# Pick the Pegasus model
-model_name = "google/pegasus-xsum"
+# Store the summary sentences generated by TextRank
+for sent in doc._.textrank.summary(limit_phrases=50, limit_sentences=50):
+    summary_sentences.append(sent.text)
 
-# Load the pretrained tokenizer
-pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
 
-# Define the Pegasus model
-pegasus_model = PegasusForConditionalGeneration.from_pretrained(model_name)
+# Create a dictionary to store the summary data
+summary_data = {
+    "summary_sentences": summary_sentences,
+    "event_first_player": event_first_player,
+    "event_second_player": event_second_player,
+    "event_final_result": event_final_result,
+    "event_winner": event_winner,
+    "scores": scores,
+    "event_date": event_date,
+    "tournament_name": tournament_name
+}
 
-# Create tokens for the Pegasus model
-tokens = pegasus_tokenizer(texte, truncation=True,
-                           padding="longest", return_tensors="pt")
+# Convert the summary data to JSON format
+summary_json = json.dumps(summary_data)
 
-# Generate the summary using Pegasus
-# Adjust max_length to get a shorter summary
-encoded_summary = pegasus_model.generate(
-    **tokens, max_length=200, do_sample=True, temperature=1.5)
-
-# Decode the summarized text
-decoded_summary = pegasus_tokenizer.decode(
-    encoded_summary[0], skip_special_tokens=True)
-
-# print("\n Petit résumé :\n")
-print(decoded_summary)
-
-# Define the pipeline for the summary
-summarizer = pipeline(
-    "summarization",
-    model=model_name,
-    tokenizer=pegasus_tokenizer,
-    framework="pt"
-)
-
-# Create a shorter summary using the pipeline
-summary = summarizer(texte, min_length=50, max_length=200,
-                     do_sample=True, temperature=1.5)
-
-print("\n Grand résumé :\n")
-print(summary[0]["summary_text"])
+# Print the summary data
+print(summary_json)
